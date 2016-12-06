@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
@@ -27,13 +28,13 @@
             <div style="height:150px;"></div>
             <div class="media media-y margin-big-bottom">
             </div>
-            <form action="index.html" method="post">
+            <s:form action="user_login.action" method="post">
                 <div class="panel loginbox">
                     <div class="text-center margin-big padding-big-top"><h1>后台管理中心</h1></div>
                     <div class="panel-body" style="padding:30px; padding-bottom:10px; padding-top:10px;">
                         <div class="form-group">
                             <div class="field field-icon-right">
-                                <input type="text" class="input input-big" name="name" placeholder="登录账号"
+                                <input type="text" class="input input-big" name="userName" placeholder="登录账号"
                                        data-validate="required:请填写账号"/>
                                 <span class="icon icon-user margin-small"></span>
                             </div>
@@ -59,7 +60,7 @@
                                                       class="button button-block bg-main text-big input-big" value="登录">
                     </div>
                 </div>
-            </form>
+            </s:form>
         </div>
     </div>
 </div>
