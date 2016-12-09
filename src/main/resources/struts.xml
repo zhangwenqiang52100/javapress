@@ -5,10 +5,21 @@
         "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
-    <package name="default" namespace="/" extends="struts-default"  >
+    <package name="default" namespace="/" extends="struts-default">
+        <interceptors>
+            <interceptor name="userLogin" class="com.zwq.interceptor.LoginInterceotor">
+            </interceptor>
+            <interceptor-stack name="userLogin_stack">
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+                <interceptor-ref name="userLogin">
+                </interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="userLogin_stack"></default-interceptor-ref>
         <action name="user_login" method="login" class="userAction">
             <result name="success">/index.jsp</result>
             <result name="input">/login.jsp</result>
+            <interceptor-ref name="userLogin_stack"></interceptor-ref>
         </action>
     </package>
 </struts>

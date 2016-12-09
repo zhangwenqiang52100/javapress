@@ -1,5 +1,6 @@
 package com.zwq.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.zwq.domain.User;
@@ -26,8 +27,10 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
         System.out.println("执行了action");
         if (exitUser==null)
         {
+            this.addActionError("用户名密码为空");
             return INPUT;
         }
+        ActionContext.getContext().getSession().put("userInfo",exitUser);
         return SUCCESS;
     }
 }
