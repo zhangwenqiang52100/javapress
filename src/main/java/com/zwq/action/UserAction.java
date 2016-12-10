@@ -5,6 +5,17 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.zwq.domain.User;
 import com.zwq.service.LoginService;
+import com.zwq.util.Identifyingcode;
+import org.apache.struts2.ServletActionContext;
+import org.hibernate.Session;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * Created by Archer on 2016/12/6.
@@ -22,15 +33,30 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
         return user;
     }
 
-    public String login() {
-        User exitUser = loginService.login(user);
+    public String login() throws ServletException, IOException {
+        User exitUser = null;
         System.out.println("执行了action");
-        if (exitUser==null)
-        {
+        HttpServletRequest request= ServletActionContext.getRequest();
+        HttpServletResponse response= ServletActionContext.getResponse();
+        HttpSession session=  request.getSession();
+        if (Identifyingcode.verifyCodeGoogle(request, response)) {
+            exitUser = loginService.login(user);
+        } else {
+            this.addActionError("验证码错误");
+            System.out.println("验证码错误");
+            return INPUT;
+        }
+        if (exitUser == null) {
             this.addActionError("用户名密码为空");
             return INPUT;
         }
-        ActionContext.getContext().getSession().put("userInfo",exitUser);
+        session.setAttribute("userInfo", exitUser);
         return SUCCESS;
+    }
+
+    public String loginout() {
+        ActionContext.getContext().getSession().clear();
+        System.out.println("退出后的session信息:" + ActionContext.getContext().getSession().get("userInfo"));
+        return INPUT;
     }
 }

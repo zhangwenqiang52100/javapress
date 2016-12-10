@@ -30,14 +30,14 @@
     </div>
     <div class="head-l"><a class="button button-little bg-green" href="" target="_blank"><span class="icon-home"></span>
         前台首页</a> &nbsp;&nbsp;<a href="##" class="button button-little bg-blue"><span class="icon-wrench"></span>
-        清除缓存</a> &nbsp;&nbsp;<a class="button button-little bg-red" href="login.jsp"><span
+        清除缓存</a> &nbsp;&nbsp;<a class="button button-little bg-red" href="user_loginout.action"><span
             class="icon-power-off"></span> 退出登录</a></div>
 </div>
 <div class="leftnav">
     <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
     <h2><span class="icon-user"></span>基本设置</h2>
     <ul style="display:block">
-        <li><a href="info.html" target="right"><span class="icon-caret-right"></span>网站设置</a></li>
+        <li><a href="info.jsp" target="right"><span class="icon-caret-right"></span>网站设置</a></li>
         <li><a href="pass.html" target="right"><span class="icon-caret-right"></span>修改密码</a></li>
         <li><a href="page.html" target="right"><span class="icon-caret-right"></span>单页管理</a></li>
         <li><a href="adv.html" target="right"><span class="icon-caret-right"></span>首页轮播</a></li>
@@ -72,9 +72,6 @@
 </ul>
 <div class="admin">
     <iframe scrolling="auto" rameborder="0" src="info.html" name="right" width="100%" height="100%"></iframe>
-</div>
-<div style="text-align:center;">
-    <p>来源:<a href="http://www.mycodes.net/" target="_blank">源码之家</a></p>
 </div>
 </body>
 </html>

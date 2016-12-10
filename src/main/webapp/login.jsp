@@ -50,7 +50,7 @@
                             <div class="field">
                                 <input type="text" class="input input-big" name="code" placeholder="填写右侧的验证码"
                                        data-validate="required:请填写右侧的验证码"/>
-                                <img src="images/passcode.jpg" alt="" width="100" height="32" class="passcode"
+                                <img src="/kaptchaimg.jpg" alt="" width="100" height="32" class="passcode"
                                      style="height:43px;cursor:pointer;" onclick="this.src=this.src+'?'">
 
                             </div>

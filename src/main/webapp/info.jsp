@@ -1,6 +1,21 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Archer
+  Date: 2016/12/10
+  Time: 13:55
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="s" uri="/struts-tags" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
+    <base href="<%=basePath%>"></base>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
@@ -15,7 +30,7 @@
 <div class="panel admin-panel">
     <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 网站信息</strong></div>
     <div class="body-content">
-        <form method="post" class="form-x" action="">
+        <s:form method="post" class="form-x" action="">
             <div class="form-group">
                 <div class="label">
                     <label>网站标题：</label>
@@ -170,7 +185,7 @@
                     <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
                 </div>
             </div>
-        </form>
+        </s:form>
     </div>
 </div>
 </body>

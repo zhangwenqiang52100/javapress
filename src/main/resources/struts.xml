@@ -5,6 +5,8 @@
         "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
     <package name="default" namespace="/" extends="struts-default">
         <interceptors>
             <interceptor name="userLogin" class="com.zwq.interceptor.LoginInterceotor">
@@ -16,7 +18,8 @@
             </interceptor-stack>
         </interceptors>
         <default-interceptor-ref name="userLogin_stack"></default-interceptor-ref>
-        <action name="user_login" method="login" class="userAction">
+        <global-allowed-methods>regex:.*</global-allowed-methods>
+        <action name="user_*" method="{1}" class="userAction">
             <result name="success">/index.jsp</result>
             <result name="input">/login.jsp</result>
             <interceptor-ref name="userLogin_stack"></interceptor-ref>
