@@ -33,6 +33,12 @@ public class UserAction extends ActionSupport implements ModelDriven<User> {
         return user;
     }
 
+    /**
+     * 用户登录
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     */
     public String login() throws ServletException, IOException {
         User exitUser = null;
         System.out.println("执行了action");
