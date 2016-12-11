@@ -11,19 +11,25 @@
     <bean id="userAction" class="com.zwq.action.UserAction" scope="prototype">
         <property name="loginService" ref="loginService"></property>
     </bean>
-
+    <bean name="optionAction" class="com.zwq.action.OptionAction" scope="prototype">
+        <property name="optionService" ref="optionService"></property>
+    </bean>
 
     <!--配置service-->
     <bean id="loginService" class="com.zwq.service.impl.LoginServiceImpl">
         <property name="loginDao" ref="loginDao"></property>
     </bean>
-
+    <bean id="optionService" class="com.zwq.service.impl.OptionServiceImpl">
+        <property name="optionDao" ref="optionDao"></property>
+    </bean>
 
     <!--配置dao-->
     <bean id="loginDao" class="com.zwq.dao.impl.LoginDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
-
+    <bean id="optionDao" class="com.zwq.dao.impl.OptionDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
     <!-- 配置hibernate -->
     <!-- 加载properties文件 -->
     <context:property-placeholder location="classpath:jdbc.properties"/>

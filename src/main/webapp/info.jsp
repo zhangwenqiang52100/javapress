@@ -30,7 +30,7 @@
 <div class="panel admin-panel">
     <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 网站信息</strong></div>
     <div class="body-content">
-        <s:form method="post" class="form-x" action="">
+        <s:form method="post" class="form-x" action="admin_saveOptionWebInfo.action" namespace="/">
             <div class="form-group">
                 <div class="label">
                     <label>网站标题：</label>

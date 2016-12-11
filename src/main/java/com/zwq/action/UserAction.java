@@ -3,12 +3,11 @@ package com.zwq.action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.zwq.domain.User;
 import com.zwq.service.LoginService;
 import com.zwq.util.Identifyingcode;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.Session;
-
+import com.zwq.domain.User;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
