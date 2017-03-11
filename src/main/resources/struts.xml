@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE struts PUBLIC
-        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
-        "http://struts.apache.org/dtds/struts-2.5.dtd">
+  "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+  "http://struts.apache.org/dtds/struts-2.5.dtd">
 
 <struts>
-
-    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
-    <package name="default" namespace="/" extends="struts-default">
-        <interceptors>
-            <interceptor name="userLogin" class="com.zwq.interceptor.LoginInterceotor">
-            </interceptor>
-            <interceptor-stack name="userLogin_stack">
-                <interceptor-ref name="defaultStack"></interceptor-ref>
-                <interceptor-ref name="userLogin">
-                </interceptor-ref>
-            </interceptor-stack>
-        </interceptors>
-        <global-allowed-methods>regex:.*</global-allowed-methods>
-        <action name="user_*" method="{1}" class="userAction">
-            <result name="success">/index.jsp</result>
-            <result name="input">/login.jsp</result>
-            <interceptor-ref name="userLogin_stack"></interceptor-ref>
-        </action>
-        <action name="admin_*" method="{1}" class="optionAction">
-            <result name="success">/info.jsp</result>
-            <result name="error">/info.jsp</result>
-        </action>
-    </package>
+  <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+  <package name="default" namespace="/" extends="struts-default">
+    <interceptors>
+      <interceptor name="userLogin" class="com.zwq.interceptor.LoginInterceotor">
+      </interceptor>
+      <interceptor-stack name="userLogin_stack">
+        <interceptor-ref name="defaultStack"></interceptor-ref>
+        <interceptor-ref name="userLogin">
+        </interceptor-ref>
+      </interceptor-stack>
+    </interceptors>
+    <global-allowed-methods>regex:.*</global-allowed-methods>
+    <action name="user_*" method="{1}" class="userAction">
+      <result name="success" type="redirectAction">admin_getWebOption.action</result>
+      <result name="input">/login.jsp</result>
+    </action>
+    <action name="admin_*" method="{1}" class="optionAction">
+      <result name="success">/index.jsp</result>
+      <result name="update">/info.jsp</result>
+      <result name="error">/info.jsp</result>
+    </action>
+  </package>
 </struts>

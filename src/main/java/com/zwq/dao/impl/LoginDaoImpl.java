@@ -14,31 +14,31 @@ import java.util.List;
  */
 public class LoginDaoImpl implements LoginDao {
 
-    private SessionFactory sessionFactory;
+  private SessionFactory sessionFactory;
 
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
-    }
+  public SessionFactory getSessionFactory() {
+    return sessionFactory;
+  }
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+  public void setSessionFactory(SessionFactory sessionFactory) {
+    this.sessionFactory = sessionFactory;
+  }
 
-    @Override
-    public User findByNameAndPass(User user) {
-        System.out.println("执行了dao");
-        String hql = "from User u where u.userName=:username and u.password=:password";
-        Session session = getSessionFactory().getCurrentSession();
-        Query query = session.createQuery(hql);
-        query.setParameter("username", user.getUserName());
-        query.setParameter("password", user.getPassword());
-        List<User> userList = query.list();
-        for (User user1 : userList) {
-            System.out.println(user1.getUserName());
-        }
-        if (userList.size() > 0) {
-            return userList.get(0);
-        }
-        return null;
+  @Override
+  public User findByNameAndPass(User user) {
+    System.out.println("执行了dao");
+    String hql = "from User u where u.userName=:username and u.password=:password";
+    Session session = getSessionFactory().getCurrentSession();
+    Query query = session.createQuery(hql);
+    query.setParameter("username", user.getUserName());
+    query.setParameter("password", user.getPassword());
+    List<User> userList = query.list();
+    for (User user1 : userList) {
+      System.out.println(user1.getUserName());
     }
+    if (userList.size() > 0) {
+      return userList.get(0);
+    }
+    return null;
+  }
 }
