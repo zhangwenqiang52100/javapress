@@ -6,30 +6,109 @@
   xmlns:tx="http://www.springframework.org/schema/tx"
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+  <context:component-scan base-package="com.zwq"/>
+
 
   <!--配置action-->
-  <bean id="userAction" class="com.zwq.action.UserAction" scope="prototype">
+  <!--登录action-->
+  <bean id="loginAction" class="com.zwq.action.LoginAction" scope="prototype">
+    <property name="userService" ref="userService"></property>
     <property name="loginService" ref="loginService"></property>
   </bean>
+  <!--设置action-->
   <bean name="optionAction" class="com.zwq.action.OptionAction" scope="prototype">
     <property name="optionService" ref="optionService"></property>
   </bean>
+  <!--用户设置action-->
+  <bean name="userAction" class="com.zwq.action.UserAction" scope="prototype">
+    <property name="userService" ref="userService"></property>
+  </bean>
+  <!--用户设置action-->
+  <bean name="carouselAction" class="com.zwq.action.CarouselAction" scope="prototype">
+    <property name="carouselService" ref="carouselService"></property>
+  </bean>
+  <!--栏目管理action-->
+  <bean name="taxonomyAction" class="com.zwq.action.TaxonomyAction" scope="prototype">
+    <property name="taxonomyService" ref="taxonomyService"></property>
+  </bean>
+  <!--分類管理action-->
+  <bean name="cateAction" class="com.zwq.action.CateAction" scope="prototype">
+    <property name="cateService" ref="cateService"></property>
+    <property name="taxonomyService" ref="taxonomyService"></property>
+  </bean>
+  <!--文章管理action-->
+  <bean name="articleAction" class="com.zwq.action.ArticleAction" scope="prototype">
+    <property name="articleService" ref="articleService"></property>
+    <property name="cateService" ref="cateService"></property>
+    <property name="taxonomyService" ref="taxonomyService"></property>
+  </bean>
 
   <!--配置service-->
+
+  <!--登录service-->
   <bean id="loginService" class="com.zwq.service.impl.LoginServiceImpl">
     <property name="loginDao" ref="loginDao"></property>
   </bean>
+  <!--设置service-->
   <bean id="optionService" class="com.zwq.service.impl.OptionServiceImpl">
     <property name="optionDao" ref="optionDao"></property>
   </bean>
-
+  <!--用户service-->
+  <bean id="userService" class="com.zwq.service.impl.UserServiceImp">
+    <property name="userDao" ref="userDao"></property>
+  </bean>
+  <!--首页轮播service-->
+  <bean id="carouselService" class="com.zwq.service.impl.CarouselServiceImpl">
+    <property name="carouselDao" ref="carouselDao"></property>
+  </bean>
+  <!--栏目管理service-->
+  <bean id="taxonomyService" class="com.zwq.service.impl.TaxonomyServiceImpl">
+    <property name="taxonomyDao" ref="taxonomyDao"></property>
+  </bean>
+  <!--分类service-->
+  <bean id="cateService" class="com.zwq.service.impl.CateServiceImpl">
+    <property name="cateDao" ref="cateDao"></property>
+  </bean>
+  <!--文章service-->
+  <bean id="articleService" class="com.zwq.service.impl.ArticleServiceImpl">
+    <property name="articleDao" ref="articleDao"></property>
+  </bean>
   <!--配置dao-->
+
+  <!--登錄dao-->
   <bean id="loginDao" class="com.zwq.dao.impl.LoginDaoImpl">
     <property name="sessionFactory" ref="sessionFactory"></property>
   </bean>
+  <!--用戶信息dao-->
+  <bean id="userDao" class="com.zwq.dao.impl.UserDaoImp">
+    <property name="sessionFactory" ref="sessionFactory"></property>
+  </bean>
+  <!--設置dao-->
   <bean id="optionDao" class="com.zwq.dao.impl.OptionDaoImpl">
     <property name="sessionFactory" ref="sessionFactory"></property>
   </bean>
+  <!--首页轮播dao-->
+  <bean id="carouselDao" class="com.zwq.dao.impl.CarouselDaoImpl">
+    <property name="sessionFactory" ref="sessionFactory"></property>
+  </bean>
+  <!--栏目管理dao-->
+  <bean id="taxonomyDao" class="com.zwq.dao.impl.TaxonomyDaoImpl">
+    <property name="sessionFactory" ref="sessionFactory"></property>
+  </bean>
+  <!--分类列表dao-->
+  <bean id="cateDao" class="com.zwq.dao.impl.CateDaoImpl">
+    <property name="sessionFactory" ref="sessionFactory"></property>
+  </bean>
+  <!--文章列表dao-->
+  <bean id="articleDao" class="com.zwq.dao.impl.ArticleDaoImpl">
+    <property name="sessionFactory" ref="sessionFactory"></property>
+  </bean>
+  <!--评论dao-->
+  <bean id="commentDao" class="com.zwq.dao.impl.CommentDaoImpl">
+    <property name="sessionFactory" ref="sessionFactory"></property>
+  </bean>
+
+
   <!-- 配置hibernate -->
   <!-- 加载properties文件 -->
   <context:property-placeholder location="classpath:jdbc.properties"/>
@@ -41,7 +120,7 @@
     <property name="password" value="${jdbc.password}"></property>
   </bean>
   <bean id="sessionFactory"
-    class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
     <property name="dataSource">
       <ref bean="dataSource"/>
     </property>
@@ -58,7 +137,7 @@
         <prop key="hibernate.current_session_context_class">
           org.springframework.orm.hibernate5.SpringSessionContext
         </prop>
-
+        <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
       </props>
     </property>
   </bean>

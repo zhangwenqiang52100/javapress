@@ -1,8 +1,22 @@
 package com.zwq.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.io.File;
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.Blob;
-import javax.persistence.*;
+import java.util.Arrays;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import org.hibernate.annotations.Type;
 
 
 /**
@@ -12,194 +26,177 @@ import javax.persistence.*;
 @Table(name = "option", catalog = "javapress")
 public class OptionInfo implements Serializable {
 
-  private int sid;
-  private String stitle;              //网站标题
-  private Blob slogo;                             //网站logo
-  private String surl;                   //网站域名
-  private String sentitle;                 //附加标题
-  private String skeywords;               //网站关键字
-  private String sdescription;            //网站描述
-  private String s_name;                 //联系人
-  private String s_phone;                 ///联系手机
-  private String s_tel;                     //联系电话
-  private String s_fax;                  //传真
-  private String s_qq;                    //qq
-  private String s_qqu;                  //qq群
-  private String s_email;                   //电子邮件
-  private String s_address;               //地址
-  private String scopyright;            //底部信息
+  private int id;
+  private String title;              //网站标题
+  private String keywords;               //网站关键字
+  private String description;            //网站描述
+  private String name;                 //联系人
+  private String phone;                 ///联系手机
+  private String tel;                     //联系电话
+  private String fax;                  //传真
+  private String qq;                    //qq
+  private String email;                   //电子邮件
+  private String address;               //地址
+  private String copyright;            //底部信息
+  private User user;
+  private String logoName;
+  private String logoPath;
+  private File logo;
+
+  public String getLogoPath() {
+    return logoPath;
+  }
+
+  public void setLogoPath(String logoPath) {
+    this.logoPath = logoPath;
+  }
+
+  public String getLogoName() {
+    return logoName;
+  }
+
+  public void setLogoName(String logoName) {
+    this.logoName = logoName;
+  }
+
+  //这是此注解后该属性不会数据持久化也是本例要说明的注解
+  @Transient
+  public File getLogo() {
+    return logo;
+  }
+
+  public void setLogo(File logo) {
+    this.logo = logo;
+  }
+
+  @OneToOne
+  public User getUser() {
+    return user;
+  }
+
+  @JsonIgnore
+  public void setUser(User user) {
+    this.user = user;
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  public int getSid() {
-    return sid;
+
+  public int getId() {
+    return id;
   }
 
-  public void setSid(int sid) {
-    this.sid = sid;
+  public void setId(int id) {
+    this.id = id;
   }
 
-  public String getStitle() {
-    return stitle;
+  public String getTitle() {
+    return title;
   }
 
-  public void setStitle(String stitle) {
-    this.stitle = stitle;
+  public void setTitle(String title) {
+    this.title = title;
   }
 
-  public Blob getSlogo() {
-    return slogo;
+  public String getKeywords() {
+    return keywords;
   }
 
-  public void setSlogo(Blob slogo) {
-    this.slogo = slogo;
+  public void setKeywords(String keywords) {
+    this.keywords = keywords;
   }
 
-  public String getSurl() {
-    return surl;
+  public String getDescription() {
+    return description;
   }
 
-  public void setSurl(String surl) {
-    this.surl = surl;
+  public void setDescription(String description) {
+    this.description = description;
   }
 
-  public String getSentitle() {
-    return sentitle;
+  public String getName() {
+    return name;
   }
 
-  public void setSentitle(String sentitle) {
-    this.sentitle = sentitle;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public String getSkeywords() {
-    return skeywords;
+  public String getPhone() {
+    return phone;
   }
 
-  public void setSkeywords(String skeywords) {
-    this.skeywords = skeywords;
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 
-  public String getSdescription() {
-    return sdescription;
+  public String getTel() {
+    return tel;
   }
 
-  public void setSdescription(String sdescription) {
-    this.sdescription = sdescription;
+  public void setTel(String tel) {
+    this.tel = tel;
   }
 
-  public String getS_name() {
-    return s_name;
+  public String getFax() {
+    return fax;
   }
 
-  public void setS_name(String s_name) {
-    this.s_name = s_name;
+  public void setFax(String fax) {
+    this.fax = fax;
   }
 
-  public String getS_phone() {
-    return s_phone;
+  public String getQq() {
+    return qq;
   }
 
-  public void setS_phone(String s_phone) {
-    this.s_phone = s_phone;
+  public void setQq(String qq) {
+    this.qq = qq;
   }
 
-  public String getS_tel() {
-    return s_tel;
+  public String getEmail() {
+    return email;
   }
 
-  public void setS_tel(String s_tel) {
-    this.s_tel = s_tel;
+  public void setEmail(String email) {
+    this.email = email;
   }
 
-  public String getS_fax() {
-    return s_fax;
+  public String getAddress() {
+    return address;
   }
 
-  public void setS_fax(String s_fax) {
-    this.s_fax = s_fax;
+  public void setAddress(String address) {
+    this.address = address;
   }
 
-  public String getS_qq() {
-    return s_qq;
+  public String getCopyright() {
+    return copyright;
   }
 
-  public void setS_qq(String s_qq) {
-    this.s_qq = s_qq;
-  }
-
-  public String getS_qqu() {
-    return s_qqu;
-  }
-
-  public void setS_qqu(String s_qqu) {
-    this.s_qqu = s_qqu;
-  }
-
-  public String getS_email() {
-    return s_email;
-  }
-
-  public void setS_email(String s_email) {
-    this.s_email = s_email;
-  }
-
-  public String getS_address() {
-    return s_address;
-  }
-
-  public void setS_address(String s_address) {
-    this.s_address = s_address;
-  }
-
-  public String getScopyright() {
-    return scopyright;
-  }
-
-  public void setScopyright(String scopyright) {
-    this.scopyright = scopyright;
-  }
-
-  @Override
-  public String toString() {
-    return "OptionInfo{" +
-        "stitle='" + stitle + '\'' +
-        ", slogo=" + slogo +
-        ", surl='" + surl + '\'' +
-        ", sentitle='" + sentitle + '\'' +
-        ", skeywords='" + skeywords + '\'' +
-        ", sdescription='" + sdescription + '\'' +
-        ", s_name='" + s_name + '\'' +
-        ", s_phone='" + s_phone + '\'' +
-        ", s_tel='" + s_tel + '\'' +
-        ", s_fax='" + s_fax + '\'' +
-        ", s_qq='" + s_qq + '\'' +
-        ", s_qqu='" + s_qqu + '\'' +
-        ", s_email='" + s_email + '\'' +
-        ", s_address='" + s_address + '\'' +
-        ", scopyright='" + scopyright + '\'' +
-        '}';
+  public void setCopyright(String copyright) {
+    this.copyright = copyright;
   }
 
   public OptionInfo() {
   }
 
-  public OptionInfo(String stitle, Blob slogo, String surl, String sentitle, String skeywords,
-      String sdescription, String s_name, String s_phone, String s_tel, String s_fax, String s_qq,
-      String s_qqu, String s_email, String s_address, String scopyright) {
-    this.stitle = stitle;
-    this.slogo = slogo;
-    this.surl = surl;
-    this.sentitle = sentitle;
-    this.skeywords = skeywords;
-    this.sdescription = sdescription;
-    this.s_name = s_name;
-    this.s_phone = s_phone;
-    this.s_tel = s_tel;
-    this.s_fax = s_fax;
-    this.s_qq = s_qq;
-    this.s_qqu = s_qqu;
-    this.s_email = s_email;
-    this.s_address = s_address;
-    this.scopyright = scopyright;
+  public OptionInfo(int id, String title,
+    String keywords, String description, String name, String phone,
+    String tel, String fax, String qq, String email, String address, String copyright,
+    User user) {
+    this.id = id;
+    this.title = title;
+    this.keywords = keywords;
+    this.description = description;
+    this.name = name;
+    this.phone = phone;
+    this.tel = tel;
+    this.fax = fax;
+    this.qq = qq;
+    this.email = email;
+    this.address = address;
+    this.copyright = copyright;
+    this.user = user;
   }
 }

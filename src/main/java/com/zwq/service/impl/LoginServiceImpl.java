@@ -10,15 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 public class LoginServiceImpl implements LoginService {
-    private LoginDao loginDao;
 
-    public void setLoginDao(LoginDao loginDao) {
-        this.loginDao = loginDao;
-    }
-    @Override
-    public User login(User user) {
-        System.out.println("执行了service");
-        User user1= loginDao.findByNameAndPass(user);
-        return user1;
-    }
+  private LoginDao loginDao;
+
+  public void setLoginDao(LoginDao loginDao) {
+    this.loginDao = loginDao;
+  }
+
+  @Override
+  public User login(User user) {
+    System.out.println("执行了service");
+    User user1 = loginDao.findByNameAndPass(user);
+    return user1;
+  }
 }

@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by Archer on 2016/12/10.
  */
+
+/**
+ * 验证码
+ */
 public class Identifyingcode {
 
   public static boolean verifyCodeGoogle(HttpServletRequest request, HttpServletResponse response)

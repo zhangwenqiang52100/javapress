@@ -5,11 +5,19 @@
   Time: 15:28
   To change this template use File | Settings | File Templates.
 --%>
+<%
+    String path = request.getContextPath();
+    String basePath =
+        request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
+%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
+    <base href="<%=basePath%>"></base>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport"
@@ -29,7 +37,7 @@
             <div style="height:150px;"></div>
             <div class="media media-y margin-big-bottom">
             </div>
-            <s:form action="user_login.action" method="post" namespace="/">
+            <s:form action="login_login.action" method="post" namespace="/">
                 <div class="panel loginbox">
                     <div class="text-center margin-big padding-big-top"><h1>后台管理中心</h1></div>
                     <div class="panel-body"
@@ -63,9 +71,16 @@
                             </div>
                         </div>
                     </div>
-                    <div style="padding:30px;"><input type="submit"
+                    <div style="padding:20px;"><input type="submit"
                                                       class="button button-block bg-main text-big input-big"
                                                       value="登录">
+                    </div>
+
+                    <div style="padding:20px;">
+                        <input type="button"
+                                                      class="button button-block bg-main text-big input-big"
+                                                      value="注册" onclick="window.location.href='register.jsp'">
+                        <a href="register.jsp"></a>
                     </div>
                 </div>
             </s:form>

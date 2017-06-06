@@ -26,7 +26,6 @@ public class LoginDaoImpl implements LoginDao {
 
   @Override
   public User findByNameAndPass(User user) {
-    System.out.println("执行了dao");
     String hql = "from User u where u.userName=:username and u.password=:password";
     Session session = getSessionFactory().getCurrentSession();
     Query query = session.createQuery(hql);

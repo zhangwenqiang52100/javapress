@@ -3,28 +3,94 @@
 <!DOCTYPE struts PUBLIC
   "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
   "http://struts.apache.org/dtds/struts-2.5.dtd">
-
 <struts>
+  <!-- 设置浏览器是否缓存静态内容，开发阶段应关闭，生产阶段打开，默认为打开 -->
+  <constant name="struts.serve.static.browserCache" value="false"></constant>
+  <!-- 当struts的配置文件修改后，系统是否自动重新加载该文件，默认为false，开发阶段应打开 -->
+  <constant name="struts.configuration.xml.reload" value="true"></constant>
+  <!-- 开发模式下使用，可以打印出更详细的错误信息 -->
+  <constant name="struts.devMode" value="true"></constant>
   <constant name="struts.enable.DynamicMethodInvocation" value="true"/>
+  <constant name="struts.action.excludePattern"
+    value="/rest/.*,/*/*.html,/fonts/*,css/*,/images/*,/js/*"/>
+  <constant name="struts.multipart.saveDir" value="/upload"/>
   <package name="default" namespace="/" extends="struts-default">
     <interceptors>
       <interceptor name="userLogin" class="com.zwq.interceptor.LoginInterceotor">
       </interceptor>
       <interceptor-stack name="userLogin_stack">
-        <interceptor-ref name="defaultStack"></interceptor-ref>
         <interceptor-ref name="userLogin">
         </interceptor-ref>
+        <interceptor-ref name="defaultStack"></interceptor-ref>
       </interceptor-stack>
     </interceptors>
+
+    <!--配置全局拦截器-->
+    <!--默认拦截器（全局拦截器）-->
+    <default-interceptor-ref name="userLogin_stack"></default-interceptor-ref>
+    <!--全局返回页面-->
+    <global-results>
+      <result name="relogin">/WEB-INF/admin/session.jsp</result>
+    </global-results>
+
     <global-allowed-methods>regex:.*</global-allowed-methods>
+    <!--用戶信息-->
     <action name="user_*" method="{1}" class="userAction">
-      <result name="success" type="redirectAction">admin_getWebOption.action</result>
-      <result name="input">/login.jsp</result>
+      <result name="success">/WEB-INF/admin/pass.jsp</result>
+      <result name="changePassword">/WEB-INF/admin/session.jsp</result>
+      <result name="input">/WEB-INF/admin/pass.jsp</result>
+      <!--<result name="login">/login.jsp</result>-->
+      <result name="initAllUser">/WEB-INF/admin/rootIndex.jsp</result>
+      <result name="allUserPage">/WEB-INF/admin/rootUser.jsp</result>
     </action>
+    <!--登錄，登出-->
+    <action name="login_*" method="{1}" class="loginAction">
+      <interceptor-ref name="defaultStack"></interceptor-ref>
+      <result name="success" type="redirectAction">admin_initOption.action</result>
+      <result name="input">/login.jsp</result>
+      <result name="login">/login.jsp</result>
+      <result name="rootPage" type="redirectAction">user_getBaseInitAllUser.action</result>
+    </action>
+    <!--设置-->
     <action name="admin_*" method="{1}" class="optionAction">
-      <result name="success">/index.jsp</result>
-      <result name="update">/info.jsp</result>
-      <result name="error">/info.jsp</result>
+      <result name="success">/WEB-INF/admin/index.jsp</result>
+      <result name="optionInfo">WEB-INF/admin/info.jsp</result>
+      <result name="update">WEB-INF/admin/info.jsp</result>
+      <result name="input">WEB-INF/admin/info.jsp</result>
+      <result name="error">WEB-INF/admin/info.jsp</result>
+    </action>
+    <!--首页轮播-->
+    <action name="carousel_*" method="{1}" class="carouselAction">
+      <result name="success" type="redirectAction">carousel_searchCarouselList.action</result>
+      <result name="carouselList">/WEB-INF/admin/adv.jsp</result>
+      <result name="deleteCarousel" type="redirectAction">carousel_searchCarouselList.action
+      </result>
+      <result name="editCarousel">/WEB-INF/admin/editCarousel.jsp</result>
+      <result name="addCarousel">WEB-INF/admin/editCarousel.jsp</result>
+    </action>
+    <!--栏目管理-->
+    <action name="taxonomy_*" method="{1}" class="taxonomyAction">
+      <result name="success">/WEB-INF/admin/column.jsp</result>
+      <result name="addOrUpdateTaxonomy" type="redirectAction">taxonomy_searchTaxonomyList.action
+      </result>
+      <result name="deleteTaxonomy" type="redirectAction">taxonomy_searchTaxonomyList.action
+      </result>
+    </action>
+    <!--分类管理-->
+    <action name="cate_*" method="{1}" class="cateAction">
+      <result name="success">/WEB-INF/admin/cate.jsp</result>
+      <result name="addOrUpdateCate" type="redirectAction">cate_searchCateList.action</result>
+    </action>
+    <!--文章管理-->
+    <action name="article_*" method="{1}" class="articleAction">
+      <result name="success">/WEB-INF/admin/list.jsp</result>
+      <result name="editArticle">/WEB-INF/admin/add.jsp</result>
+      <result name="saveOrUpdate" type="redirectAction">article_getArticleList.action</result>
+      <result name="updateArticle">/WEB-INF/admin/add.jsp</result>
+    </action>
+    <action name="comment_*" method="{1}" class="commentAction">
+      <result name="success">/WEB-INF/admin/book.jsp</result>
+      <result name="rootAllCommentList">/WEB-INF/admin/rootBook.jsp</result>
     </action>
   </package>
 </struts>

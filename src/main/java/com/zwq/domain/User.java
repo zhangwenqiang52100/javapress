@@ -1,10 +1,20 @@
 package com.zwq.domain;
 
+import java.io.File;
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.*;
+import javax.persistence.Transient;
 import org.hibernate.annotations.Index;
 
 
@@ -17,15 +27,87 @@ public class User implements Serializable {
 
   private int id;
   private String userName;          //登陆名
-  private String nickName;           //昵称
-  private String realName;           //真实姓名
   private String password;          //密码
-  private String salt;                //盐
   private String email;              //电子邮件
-  private String email_status;       //邮件状态(是否认证等)
   private String mobile;                //电话
+  private String states;            //国籍
+  private String zip;                   //邮编
+  private String comments;                //備註
+  private String date;                     //出生日期
+  private File file;             //头像文件
+  private String filePath;          //头像路径
+  private String fileName;                //头像图片名字
+  private String isRoot;
 
-  public User() {
+  public String getIsRoot() {
+    return isRoot;
+  }
+
+
+  public void setIsRoot(String isRoot) {
+    this.isRoot = isRoot;
+  }
+
+  private OptionInfo optionInfo;
+  private Set<Carousel> carouselSet = new HashSet<>();
+  private Set<Taxonomy> taxonomySet = new HashSet<>();
+  private Set<Cate> cateSet = new HashSet<>();
+  private Set<Article> articleSet = new HashSet<>();
+  private Set<Comment> commentSet = new HashSet<>();
+
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+  public Set<Comment> getCommentSet() {
+    return commentSet;
+  }
+
+  public void setCommentSet(Set<Comment> commentSet) {
+    this.commentSet = commentSet;
+  }
+
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+  public Set<Article> getArticleSet() {
+    return articleSet;
+  }
+
+  public void setArticleSet(Set<Article> articleSet) {
+    this.articleSet = articleSet;
+  }
+
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+  public Set<Cate> getCateSet() {
+    return cateSet;
+  }
+
+  public void setCateSet(Set<Cate> cateSet) {
+    this.cateSet = cateSet;
+  }
+
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+  public Set<Taxonomy> getTaxonomySet() {
+    return taxonomySet;
+  }
+
+  public void setTaxonomySet(Set<Taxonomy> taxonomySet) {
+    this.taxonomySet = taxonomySet;
+  }
+
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
+  public Set<Carousel> getCarouselSet() {
+    return carouselSet;
+  }
+
+  public void setCarouselSet(Set<Carousel> carouselSet) {
+    this.carouselSet = carouselSet;
+  }
+
+
+  @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+  public OptionInfo getOptionInfo() {
+    return optionInfo;
+  }
+
+  public void setOptionInfo(OptionInfo optionInfo) {
+    this.optionInfo = optionInfo;
   }
 
   @Id
@@ -48,36 +130,12 @@ public class User implements Serializable {
     this.userName = userName;
   }
 
-  public String getNickName() {
-    return nickName;
-  }
-
-  public void setNickName(String nickName) {
-    this.nickName = nickName;
-  }
-
-  public String getRealName() {
-    return realName;
-  }
-
-  public void setRealName(String realName) {
-    this.realName = realName;
-  }
-
   public String getPassword() {
     return password;
   }
 
   public void setPassword(String password) {
     this.password = password;
-  }
-
-  public String getSalt() {
-    return salt;
-  }
-
-  public void setSalt(String salt) {
-    this.salt = salt;
   }
 
   public String getEmail() {
@@ -88,14 +146,6 @@ public class User implements Serializable {
     this.email = email;
   }
 
-  public String getEmail_status() {
-    return email_status;
-  }
-
-  public void setEmail_status(String email_status) {
-    this.email_status = email_status;
-  }
-
   public String getMobile() {
     return mobile;
   }
@@ -103,4 +153,70 @@ public class User implements Serializable {
   public void setMobile(String mobile) {
     this.mobile = mobile;
   }
+
+  public String getStates() {
+    return states;
+  }
+
+  public void setStates(String states) {
+    this.states = states;
+  }
+
+  public String getZip() {
+    return zip;
+  }
+
+  public void setZip(String zip) {
+    this.zip = zip;
+  }
+
+  public String getComments() {
+    return comments;
+  }
+
+  public void setComments(String comments) {
+    this.comments = comments;
+  }
+
+  public String getDate() {
+    return date;
+  }
+
+  public void setDate(String date) {
+    this.date = date;
+  }
+
+  @Transient
+  public File getFile() {
+    return file;
+  }
+
+  public void setFile(File file) {
+    this.file = file;
+  }
+
+  public String getFilePath() {
+    return filePath;
+  }
+
+  public void setFilePath(String filePath) {
+    this.filePath = filePath;
+  }
+
+  public String getFileName() {
+    return fileName;
+  }
+
+  public void setFileName(String fileName) {
+    this.fileName = fileName;
+  }
+
+  public User(int id) {
+    this.id = id;
+  }
+
+  public User() {
+
+  }
+
 }
